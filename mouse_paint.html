@@ -1,0 +1,62 @@
+<canvas width="600" height="400"></canvas>
+
+<script>
+    var screen = document.querySelector('canvas');
+    var brush = screen.getContext('2d');
+
+    brush.fillStyle = 'grey';
+    brush.fillRect(0, 0, 600, 400);
+
+    var click = false
+    var color = ['blue','hotpink','yellow']
+    var currentColor = 0
+
+    function drawCircle(event) {
+
+        if(click == true) {
+
+            var x = event.pageX - screen.offsetLeft;
+            var y = event.pageY - screen.offsetTop;
+            brush.fillStyle = color[currentColor];
+            brush.beginPath();
+            brush.arc(x, y, 5, 0, 2 * 3.14);
+            brush.fill();
+            console.log(x + ',' + y);
+
+        }
+
+    }
+
+    screen.onmousemove = drawCircle;
+    
+    function startDrawing() {
+
+        click = true;
+
+    }
+
+    function stopDrawing() {
+
+        click = false;
+
+    }
+
+    screen.onmousedown = startDrawing;
+    screen.onmouseup = stopDrawing;
+
+    function changeColor() {
+
+        currentColor++;
+        if(currentColor >= color.length) {
+
+            currentColor = 0;
+
+        } 
+        
+        return false;
+
+    }
+
+    screen.oncontextmenu = changeColor;
+
+</script>
